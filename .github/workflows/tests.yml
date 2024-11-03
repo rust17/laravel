@@ -3,8 +3,7 @@ name: Tests
 on:
   push:
     branches:
-      - master
-      - '*.x'
+      - circle-test
   pull_request:
   schedule:
     - cron: '0 0 * * *'
@@ -19,7 +18,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.2, 8.3]
+        php: [8.3]
 
     name: PHP ${{ matrix.php }}
 
@@ -42,6 +41,9 @@ jobs:
 
       - name: Generate app key
         run: php artisan key:generate
+
+      - name: Optimize
+        run: php artisan optimize
 
       - name: Execute tests
         run: vendor/bin/phpunit
